@@ -84,6 +84,7 @@
             drawSquares();
             drawGrid();
             drawScores();
+            //drawNewLines();
         }
 
         function click(/** @type {MouseEvent} */ ev) {
@@ -113,6 +114,7 @@
                     drawDot(getGridX(j), getGridY(i));
                 }
             }
+            //Draw lines
         }
 
         function drawLine(x0, y0, x1, y1, color) {
@@ -302,6 +304,17 @@
                 // next player's turn
                 //playersTurn = !playersTurn;
             }
+        }
+
+        function Line(x0, y0, x1, y1, color, show) {
+            this.x0 = x0;
+            this.color = color;
+            this.show = show;
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
         }
 
         // create the Square object constructor
