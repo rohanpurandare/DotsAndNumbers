@@ -84,7 +84,7 @@
             drawBoard();
             drawSquares();
             drawGrid();
-            drawScores();
+            //drawScores();
             //drawNewLines();
         }
 
@@ -338,10 +338,10 @@
             this.numSelected = 0;
             this.value = parseInt(Math.random() * 4);
             //this.owner = null;
-            this.sideBot = {selected: false};
-            this.sideLeft = {selected: false};
-            this.sideRight = {selected: false};
-            this.sideTop = {selected: false};
+            this.sideBot = {selected: false, color: COLOR_BOARD};
+            this.sideLeft = {selected: false, color: COLOR_BOARD};
+            this.sideRight = {selected: false, color: COLOR_BOARD};
+            this.sideTop = {selected: false, color: COLOR_BOARD};
 
             this.contains = function(x, y) {
                 return x >= this.left && x < this.right && y >= this.top && y < this.bot;
@@ -394,23 +394,24 @@
 
             this.drawSides = function() {
 
-                // highlighting
+                // highlighting __________________________________ MIGHT REMOVE THIS
                 if (this.highlight != null) {
                     this.drawSide(this.highlight, getColor(true));
                 }
 
                 // selected sides
                 if (this.sideBot.selected) {
-                    this.drawSide(Side.BOT, getColor(false));
+                    console.log(this.sideBot.color);
+                    this.drawSide(Side.BOT, this.sideBot.color);
                 }
                 if (this.sideLeft.selected) {
-                    this.drawSide(Side.LEFT, getColor(false));
+                    this.drawSide(Side.LEFT, this.sideLeft.color);
                 }
                 if (this.sideRight.selected) {
-                    this.drawSide(Side.RIGHT, getColor(false));
+                    this.drawSide(Side.RIGHT, this.sideRight.color);
                 }
                 if (this.sideTop.selected) {
-                    this.drawSide(Side.TOP, getColor(false));
+                    this.drawSide(Side.TOP, this.sideTop.color);
                 }
             }
 
@@ -426,13 +427,13 @@
                 let dClosest = Math.min(dBot, dLeft, dRight, dTop);
 
                 // highlight the closest if not already selected
-                if (dClosest == dBot && !this.sideBot.selected) {
+                if (dClosest == dBot) {
                     this.highlight = Side.BOT;
-                } else if (dClosest == dLeft && !this.sideLeft.selected) {
+                } else if (dClosest == dLeft) {
                     this.highlight = Side.LEFT;
-                } else if (dClosest == dRight && !this.sideRight.selected) {
+                } else if (dClosest == dRight) {
                     this.highlight = Side.RIGHT;
-                } else if (dClosest == dTop && !this.sideTop.selected) {
+                } else if (dClosest == dTop) {
                     this.highlight = Side.TOP;
                 }
 
@@ -449,21 +450,49 @@
                 switch (this.highlight) {
                     case Side.BOT:
                         this.sideBot.selected = true;
+                        if (this.sideBot.color == COLOR_BOARD) {
+                            this.numSelected++;
+                            this.sideBot.color = COLOR_PLAY;
+                        } else {
+                            this.numSelected--;
+                            this.sideBot.color = COLOR_BOARD;
+                        }
                         break;
                     case Side.LEFT:
                         this.sideLeft.selected = true;
+                        if (this.sideLeft.color == COLOR_BOARD) {
+                            this.numSelected++;
+                            this.sideLeft.color = COLOR_PLAY;
+                        } else {
+                            this.numSelected--;
+                            this.sideLeft.color = COLOR_BOARD;
+                        }
                         break;
                     case Side.RIGHT:
                         this.sideRight.selected = true;
+                        if (this.sideRight.color == COLOR_BOARD) {
+                            this.numSelected++;
+                            this.sideRight.color = COLOR_PLAY;
+                        } else {
+                            this.numSelected--;
+                            this.sideRight.color = COLOR_BOARD;
+                        }
                         break;
                     case Side.TOP:
                         this.sideTop.selected = true;
+                        if (this.sideTop.color == COLOR_BOARD) {
+                            this.numSelected++;
+                            this.sideTop.color = COLOR_PLAY;
+                        } else {
+                            this.numSelected--;
+                            this.sideTop.color = COLOR_BOARD;
+                        }
                         break;
                 }
                 this.highlight = null;
 
                 // increase the number of selected
-                this.numSelected++;
+                console.log("NUMSELECTED: ", this.numSelected);
                 if (this.numSelected == this.value) {
 
 
