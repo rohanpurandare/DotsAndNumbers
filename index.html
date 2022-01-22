@@ -31,6 +31,7 @@
         const COLOR_DOT = "sienna";
         const COLOR_PLAY = "royalblue";
         const COLOR_PLAY_LIT = "lightsteelblue";
+        const GREEN = "lightgreen";
         const COLOR_TIE = "black";
 
         // text
@@ -65,7 +66,7 @@
         ctx.textBaseline = "middle";
 
         // game variables
-        var currentCells, playersTurn, squares;
+        var currentCells, squares;
         var scoreComp, scorePlay;
         var timeEnd;
 
@@ -179,6 +180,15 @@
             return light ? COLOR_PLAY_LIT : COLOR_PLAY;
         }
 
+        function getColorCopy(light) {
+            /*if (player) {
+                return light ? COLOR_PLAY_LIT : COLOR_PLAY;
+            } else {
+                return light ? COLOR_COMP_LIT : COLOR_COMP;
+            }*/
+            return light ? GREEN : COLOR_PLAY_LIT;
+        }
+
         function getText(value, small) {
             /*if (player) {
                 return small ? TEXT_PLAY_SML : TEXT_PLAY;
@@ -265,7 +275,6 @@
 
         function newGame() {
             currentCells = [];
-            playersTurn = Math.random() >= 0.5;
             scoreComp = 0;
             scorePlay = 0;
             timeEnd = 0;
@@ -344,7 +353,13 @@
                 }*/
 
                 // light background
-                ctx.fillStyle = getColor(true);
+                if (this.numSelected == this.value) {
+                    ctx.fillStyle = getColorCopy(true);
+                }
+                else {
+                    ctx.fillStyle = getColorCopy(false);
+                }
+                
                 ctx.fillRect(
                     this.left + STROKE, this.top + STROKE,
                     this.w - STROKE * 2, this.h - STROKE * 2
@@ -449,14 +464,8 @@
 
                 // increase the number of selected
                 this.numSelected++;
-                if (this.numSelected == 4) {
+                if (this.numSelected == this.value) {
 
-                    // increment score
-                    if (playersTurn) {
-                        scorePlay++;
-                    } else {
-                        scoreComp++;
-                    }
 
                     // filled
                     return true;
