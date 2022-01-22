@@ -52,6 +52,9 @@
             RIGHT: 3
         }
 
+        var horizontalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
+        var verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
+
         // set up the game canvas
         var canv = document.createElement("canvas");
         canv.height = HEIGHT;
@@ -284,7 +287,7 @@
             for (let i = 0; i < GRID_SIZE; i++) {
                 squares[i] = [];
                 for (let j = 0; j < GRID_SIZE; j++) {
-                    squares[i][j] = new Square(getGridX(j), getGridY(i), CELL, CELL);
+                    squares[i][j] = new Square(getGridX(j), getGridY(i), CELL, CELL, i, j);
                 }
             }
         }
@@ -327,7 +330,7 @@
         }
 
         // create the Square object constructor
-        function Square(x, y, w, h) {
+        function Square(x, y, w, h, i, j) {
             this.w = w;
             this.h = h;
             this.bot = y + h;
@@ -337,6 +340,8 @@
             this.highlight = null;
             this.numSelected = 0;
             this.value = parseInt(Math.random() * 4);
+            this.i = i;
+            this.j = j;
             //this.owner = null;
             this.sideBot = {selected: false, color: COLOR_BOARD};
             this.sideLeft = {selected: false, color: COLOR_BOARD};
@@ -452,9 +457,11 @@
                         this.sideBot.selected = true;
                         if (this.sideBot.color == COLOR_BOARD) {
                             this.numSelected++;
+                            horizontalLines[this.j + GRID_SIZE + (GRID_SIZE * this.i)] = 1;
                             this.sideBot.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
+                            horizontalLines[this.j + GRID_SIZE + (GRID_SIZE * this.i)] = 0;
                             this.sideBot.color = COLOR_BOARD;
                         }
                         break;
@@ -462,9 +469,11 @@
                         this.sideLeft.selected = true;
                         if (this.sideLeft.color == COLOR_BOARD) {
                             this.numSelected++;
+                            verticalLines[this.i + (GRID_SIZE * this.j)] = 1;
                             this.sideLeft.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
+                            verticalLines[this.i + (GRID_SIZE * this.j)] = 0;
                             this.sideLeft.color = COLOR_BOARD;
                         }
                         break;
@@ -472,9 +481,11 @@
                         this.sideRight.selected = true;
                         if (this.sideRight.color == COLOR_BOARD) {
                             this.numSelected++;
+                            verticalLines[this.i + GRID_SIZE + (GRID_SIZE * this.j)] = 1;
                             this.sideRight.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
+                            verticalLines[this.i + GRID_SIZE + (GRID_SIZE * this.j)] = 0;
                             this.sideRight.color = COLOR_BOARD;
                         }
                         break;
@@ -482,13 +493,17 @@
                         this.sideTop.selected = true;
                         if (this.sideTop.color == COLOR_BOARD) {
                             this.numSelected++;
+                            horizontalLines[this.j + (GRID_SIZE * this.i)] = 1;
                             this.sideTop.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
+                            horizontalLines[this.j + (GRID_SIZE * this.i)] = 0;
                             this.sideTop.color = COLOR_BOARD;
                         }
                         break;
                 }
+                console.log("H: ", horizontalLines);
+                console.log("V: ", verticalLines);
                 this.highlight = null;
 
                 // increase the number of selected
