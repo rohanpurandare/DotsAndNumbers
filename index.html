@@ -123,7 +123,7 @@
             ctx.stroke();
         }
 
-        function drawScores() {
+        /*function drawScores() {
             let colComp = playersTurn ? COLOR_COMP_LIT : COLOR_COMP;
             let colPlay = playersTurn ? COLOR_PLAY : COLOR_PLAY_LIT;
             drawText(TEXT_PLAY, WIDTH * 0.25, MARGIN * 0.25, colPlay, TEXT_SIZE_TOP);
@@ -151,7 +151,7 @@
                     newGame();
                 }
             }
-        }
+        }*/
 
         function drawSquares() {
             for (let row of squares) {
@@ -168,20 +168,22 @@
             ctx.fillText(text, x, y);
         }
 
-        function getColor(player, light) {
-            if (player) {
+        function getColor(light) {
+            /*if (player) {
                 return light ? COLOR_PLAY_LIT : COLOR_PLAY;
             } else {
                 return light ? COLOR_COMP_LIT : COLOR_COMP;
-            }
+            }*/
+            return light ? COLOR_PLAY_LIT : COLOR_PLAY;
         }
 
-        function getText(player, small) {
-            if (player) {
+        function getText(value, small) {
+            /*if (player) {
                 return small ? TEXT_PLAY_SML : TEXT_PLAY;
             } else {
                 return small ? TEXT_COMP_SML : TEXT_COMP;
-            }
+            }*/
+            return value;
         }
 
         function getGridX(col) {
@@ -298,7 +300,7 @@
                 }
             } else {
                 // next player's turn
-                playersTurn = !playersTurn;
+                //playersTurn = !playersTurn;
             }
         }
 
@@ -312,23 +314,24 @@
             this.top = y;
             this.highlight = null;
             this.numSelected = 0;
-            this.owner = null;
-            this.sideBot = {owner: null, selected: false};
-            this.sideLeft = {owner: null, selected: false};
-            this.sideRight = {owner: null, selected: false};
-            this.sideTop = {owner: null, selected: false};
+            this.value = parseInt(Math.random() * 4);
+            //this.owner = null;
+            this.sideBot = {selected: false};
+            this.sideLeft = {selected: false};
+            this.sideRight = {selected: false};
+            this.sideTop = {selected: false};
 
             this.contains = function(x, y) {
                 return x >= this.left && x < this.right && y >= this.top && y < this.bot;
             }
 
             this.drawFill = function() {
-                if (this.owner == null) {
+                /*if (this.owner == null) {
                     return;
-                }
+                }*/
 
                 // light background
-                ctx.fillStyle = getColor(this.owner, true);
+                ctx.fillStyle = getColor(true);
                 ctx.fillRect(
                     this.left + STROKE, this.top + STROKE,
                     this.w - STROKE * 2, this.h - STROKE * 2
@@ -336,10 +339,10 @@
 
                 // owner text
                 drawText(
-                    getText(this.owner, true),
+                    getText(this.value, true),
                     this.left + this.w / 2,
                     this.top + this.h / 2,
-                    getColor(this.owner, false),
+                    getColor(false),
                     TEXT_SIZE_CELL
                 );
             }
@@ -370,16 +373,16 @@
 
                 // selected sides
                 if (this.sideBot.selected) {
-                    this.drawSide(Side.BOT, getColor(this.sideBot.owner, false));
+                    this.drawSide(Side.BOT, getColor(false));
                 }
                 if (this.sideLeft.selected) {
-                    this.drawSide(Side.LEFT, getColor(this.sideLeft.owner, false));
+                    this.drawSide(Side.LEFT, getColor(false));
                 }
                 if (this.sideRight.selected) {
-                    this.drawSide(Side.RIGHT, getColor(this.sideRight.owner, false));
+                    this.drawSide(Side.RIGHT, getColor(false));
                 }
                 if (this.sideTop.selected) {
-                    this.drawSide(Side.TOP, getColor(this.sideTop.owner, false));
+                    this.drawSide(Side.TOP, getColor(false));
                 }
             }
 
@@ -417,19 +420,15 @@
                 // select the highlighted side
                 switch (this.highlight) {
                     case Side.BOT:
-                        this.sideBot.owner = playersTurn;
                         this.sideBot.selected = true;
                         break;
                     case Side.LEFT:
-                        this.sideLeft.owner = playersTurn;
                         this.sideLeft.selected = true;
                         break;
                     case Side.RIGHT:
-                        this.sideRight.owner = playersTurn;
                         this.sideRight.selected = true;
                         break;
                     case Side.TOP:
-                        this.sideTop.owner = playersTurn;
                         this.sideTop.selected = true;
                         break;
                 }
@@ -438,7 +437,6 @@
                 // increase the number of selected
                 this.numSelected++;
                 if (this.numSelected == 4) {
-                    this.owner = playersTurn;
 
                     // increment score
                     if (playersTurn) {
@@ -459,5 +457,3 @@
 </body>
 
 </html>
-js-dots-and-boxes-01.html
-Displaying js-dots-and-boxes-01.html.
