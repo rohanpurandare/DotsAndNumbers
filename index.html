@@ -134,6 +134,14 @@
             //drawNewLines();
         }
 
+        function clearLines() {
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    squares[i][j].clearLines();
+                }
+            }
+        }
+
         function click(/** @type {MouseEvent} */ ev) {
             if (/*TODO !playersTurn ||*/ timeEnd > 0) {
                 return;
@@ -174,6 +182,9 @@
                 }
             }
             drawText(stringTime, WIDTH * 0.5, MARGIN * 0.5, COLOR_COMP, TEXT_SIZE_TOP); //this draws 30 times per second
+            /*if (gameTimer % 10 == 0) {
+                clearLines();
+            }*/
         }
 
         function drawLine(x0, y0, x1, y1, color) {
@@ -388,7 +399,9 @@
             loopTimer = 0;
             gameTimer = 0;
             stringTime = "";
-            gameNumber = parseInt(Math.random() * 12);
+            gameNumber = parseInt(Math.random() * 11);
+            console.log(gameNumber);
+
 
             // set up the squares
             squares = [];
@@ -448,6 +461,18 @@
 
             this.contains = function(x, y) {
                 return x >= this.left && x < this.right && y >= this.top && y < this.bot;
+            }
+
+            this.clearLines = function() {
+                this.numSelected = 0;
+                drawLine(this.left, this.bot, this.right, this.bot, COLOR_BOARD);
+                drawLine(this.left, this.top, this.left, this.bot, COLOR_BOARD);
+                drawLine(this.right, this.top, this.right, this.bot, COLOR_BOARD);
+                drawLine(this.left, this.top, this.right, this.top, COLOR_BOARD);
+                this.sideBot = {selected: false, color: COLOR_BOARD};
+                this.sideLeft = {selected: false, color: COLOR_BOARD};
+                this.sideRight = {selected: false, color: COLOR_BOARD};
+                this.sideTop = {selected: false, color: COLOR_BOARD};
             }
 
             this.drawFill = function() {
@@ -625,6 +650,9 @@
             }
         }
     </script>
+    <div>
+        <button type="button" onclick=clearLines()>Clear Lines!</button>
+    </div>
 </body>
 
 </html>
