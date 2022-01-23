@@ -52,8 +52,11 @@
             RIGHT: 3
         }
 
+        var greenCounter = 0;
         var horizontalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
         var verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
+        const horizontalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0];
+        const verticalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0];
 
         // set up the game canvas
         var canv = document.createElement("canvas");
@@ -87,7 +90,7 @@
             drawBoard();
             drawSquares();
             drawGrid();
-            //drawScores();
+            drawScores();
             //drawNewLines();
         }
 
@@ -127,6 +130,13 @@
             ctx.moveTo(x0, y0);
             ctx.lineTo(x1, y1);
             ctx.stroke();
+        }
+
+        function drawScores() {
+            console.log(greenCounter);
+            if (greenCounter == (GRID_SIZE * GRID_SIZE)) {
+                console.log("DONE");
+            }
         }
 
         /*function drawScores() {
@@ -339,9 +349,10 @@
             this.top = y;
             this.highlight = null;
             this.numSelected = 0;
-            this.value = parseInt(Math.random() * 4);
+            this.value = 1;//parseInt(Math.random() * 4);
             this.i = i;
             this.j = j;
+            this.color = COLOR_PLAY_LIT;
             //this.owner = null;
             this.sideBot = {selected: false, color: COLOR_BOARD};
             this.sideLeft = {selected: false, color: COLOR_BOARD};
@@ -360,9 +371,17 @@
                 // light background
                 if (this.numSelected == this.value) {
                     ctx.fillStyle = getColorCopy(true);
+                    if (this.color == COLOR_PLAY_LIT) {
+                        greenCounter++;
+                    }
+                    this.color = GREEN;
                 }
                 else {
                     ctx.fillStyle = getColorCopy(false);
+                    if (this.color == GREEN) {
+                        greenCounter--;
+                    }
+                    this.color = COLOR_PLAY_LIT
                 }
                 
                 ctx.fillRect(
@@ -406,7 +425,6 @@
 
                 // selected sides
                 if (this.sideBot.selected) {
-                    console.log(this.sideBot.color);
                     this.drawSide(Side.BOT, this.sideBot.color);
                 }
                 if (this.sideLeft.selected) {
@@ -502,12 +520,12 @@
                         }
                         break;
                 }
-                console.log("H: ", horizontalLines);
-                console.log("V: ", verticalLines);
+                //console.log("H: ", horizontalLines);
+                //console.log("V: ", verticalLines);
                 this.highlight = null;
 
                 // increase the number of selected
-                console.log("NUMSELECTED: ", this.numSelected);
+                //console.log("NUMSELECTED: ", this.numSelected);
                 if (this.numSelected == this.value) {
 
 
