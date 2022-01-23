@@ -9,6 +9,13 @@
 </head>
 
 <body>
+    <br>
+    <div>
+        <button type="button" onclick=clearLines()>Clear Lines!</button>
+        <button onclick="{newGame()}">New Game!</button>
+        <button onclick="location.href='howto.html'">How to Play!</button>
+    </div>
+    <br>
     <script>
         var keepPlaying = true;
 
@@ -17,8 +24,8 @@
         const FPS = 30; // frames per second
         const GRID_SIZE = 5; // number of rows (and columns)
         var height, width;
-        if (window.innerHeight - 50 < window.innerWidth) {
-            height = window.innerHeight - 50;
+        if (window.innerHeight - 80 < window.innerWidth) {
+            height = window.innerHeight - 80;
             width = height * .9;
         } else {
             width = window.innerWidth - 15;
@@ -540,9 +547,9 @@
             this.drawSides = function() {
 
                 // highlighting __________________________________ MIGHT REMOVE THIS
-                if (this.highlight != null) {
+                /*if (this.highlight != null) {
                     this.drawSide(this.highlight, getColor(true));
-                }
+                }*/
 
                 // selected sides
                 if (this.sideBot.selected) {
@@ -659,11 +666,6 @@
             }
         }
     </script>
-    <div>
-        <button type="button" onclick=clearLines()>Clear Lines!</button>
-        <button onclick="{newGame()}">New Game!</button>
-    <button onclick="location.href='howto.html'">How to Play!</button>
-    </div>
 </body>
 
 </html>
