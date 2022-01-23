@@ -11,7 +11,7 @@
 <body>
     <script>
         // game parameters
-        const DELAY_END = 2; // seconds until a new game starts
+        const DELAY_END = 4; // seconds until a new game starts
         const FPS = 30; // frames per second
         const GRID_SIZE = 5; // number of rows (and columns)
         const HEIGHT = 550; // pixels
@@ -35,14 +35,15 @@
         const COLOR_TIE = "black";
 
         // text
-        const TEXT_COMP = "Computer";
+        const TEXT_YOU = "YOU";
         const TEXT_COMP_SML = "Comp";
         const TEXT_PLAY = "Player";
         const TEXT_PLAY_SML = "Play";
         const TEXT_SIZE_CELL = CELL / 3;
         const TEXT_SIZE_TOP = MARGIN / 6;
         const TEXT_TIE = "DRAW!";
-        const TEXT_WIN = "WINS!";
+        const TEXT_WIN = "WIN!";
+
 
         // definitions
         const Side = {
@@ -52,14 +53,14 @@
             RIGHT: 3
         }
 
-        var greenCounter = 0;
-        var winner = true;
-        var horizontalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
-        var verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
+        var greenCounter;
+        var winner;
+        var horizontalLines;
+        var verticalLines;
         const horizontalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0];
         const verticalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0];
         const initialValues = [0, 1, 3, 2, 0, 1, 2, 1, 2, 2, 3, 2, 0, 0, 2, 1, 3, 1, 0, 2, 1, 3, 1, 2, 2];
-        var counter = 0;
+        var counter;
 
         // set up the game canvas
         var canv = document.createElement("canvas");
@@ -145,15 +146,28 @@
                             output = false;
                         }
                         if (verticalLines[i] != verticalLinesAnswer[i]) {
-                            output = flase;
+                            output = false;
                         }
                     }
                     if (output) {
                         console.log("You win!");
+                        startCountdown();
                         winner = false;
                     }
                 }
             }
+            if (timeEnd > 0) {
+                timeEnd--;
+                drawText(TEXT_YOU, WIDTH * 0.5, MARGIN * 0.5, COLOR_COMP, TEXT_SIZE_TOP);
+                drawText(TEXT_WIN, WIDTH * 0.5, MARGIN * 0.7, COLOR_COMP, TEXT_SIZE_TOP);
+                if (timeEnd == 0) {
+                    newGame();
+                }
+            }
+        }
+
+        function startCountdown() {
+            timeEnd = Math.ceil(DELAY_END * FPS);
         }
 
         /*function drawScores() {
@@ -308,6 +322,11 @@
             scoreComp = 0;
             scorePlay = 0;
             timeEnd = 0;
+            greenCounter = 0;
+            winner = true;
+            horizontalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
+            verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
+            counter = 0;
 
             // set up the squares
             squares = [];
@@ -334,7 +353,7 @@
             currentCells = [];
 
             // check for winner
-            if (filledSquare) {
+            /*if (filledSquare) {
                 if (scorePlay + scoreComp == GRID_SIZE * GRID_SIZE) {
                     // game over
                     timeEnd = Math.ceil(DELAY_END * FPS);
@@ -342,7 +361,7 @@
             } else {
                 // next player's turn
                 //playersTurn = !playersTurn;
-            }
+            }*/
         }
 
         function Line(x0, y0, x1, y1, color, show) {
