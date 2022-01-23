@@ -53,6 +53,7 @@
         }
 
         var greenCounter = 0;
+        var winner = true;
         var horizontalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
         var verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
         const horizontalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0];
@@ -133,9 +134,23 @@
         }
 
         function drawScores() {
-            console.log(greenCounter);
-            if (greenCounter == (GRID_SIZE * GRID_SIZE)) {
-                console.log("DONE");
+            if (winner) {
+                console.log(greenCounter);
+                if (greenCounter == (GRID_SIZE * GRID_SIZE)) {
+                    var output = true;
+                    for (var i = 0; i < GRID_SIZE * GRID_SIZE + GRID_SIZE; i++) {
+                        if (horizontalLines[i] != horizontalLinesAnswer[i]) {
+                            output = false;
+                        }
+                        if (verticalLines[i] != verticalLinesAnswer[i]) {
+                            output = flase;
+                        }
+                    }
+                    if (output) {
+                        console.log("You win!");
+                        winner = false;
+                    }
+                }
             }
         }
 
