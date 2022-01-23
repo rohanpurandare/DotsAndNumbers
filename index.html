@@ -16,23 +16,32 @@
         const DELAY_END = 4; // seconds until a new game starts
         const FPS = 30; // frames per second
         const GRID_SIZE = 5; // number of rows (and columns)
-        const HEIGHT = 550; // pixels
+        var height, width;
+        if (window.innerHeight - 50 < window.innerWidth) {
+            height = window.innerHeight - 50;
+            width = height * .9;
+        } else {
+            width = window.innerWidth - 15;
+            height = width * (1 / 0.9);
+        }
+        const HEIGHT = height; // pixels
 
         // derived dimensions
-        const WIDTH = HEIGHT * 0.9;
+        const WIDTH = width;
         const CELL = WIDTH / (GRID_SIZE + 2); // size of cells (as well as left and right margin)
         const STROKE = CELL / 12; // stroke width
         const DOT = STROKE; // dot radius
         const MARGIN = HEIGHT - (GRID_SIZE + 1) * CELL; // top margin for score, names, etc.
 
         // colours
-        const COLOR_BOARD = "cornsilk";
-        const COLOR_BORDER = "wheat";
-        const COLOR_COMP = "crimson";
+        const COLOR_BOARD = "#adf7ff";
+        const COLOR_BORDER = "dimgrey";
+        const COLOR_COMP = "dimgrey";
+        const LIGHT_GREY = "lightgrey";
         const COLOR_COMP_LIT = "lightpink";
-        const COLOR_DOT = "sienna";
-        const COLOR_PLAY = "royalblue";
-        const COLOR_PLAY_LIT = "lightsteelblue";
+        const COLOR_DOT = "black";
+        const COLOR_PLAY = "dimgrey";
+        const COLOR_PLAY_LIT = "lightpink";
         const GREEN = "lightgreen";
         const COLOR_TIE = "black";
 
@@ -283,7 +292,7 @@
             } else {
                 return light ? COLOR_COMP_LIT : COLOR_COMP;
             }*/
-            return light ? COLOR_PLAY_LIT : COLOR_PLAY;
+            return light ? LIGHT_GREY : COLOR_PLAY;
         }
 
         function getColorCopy(light) {
@@ -398,7 +407,7 @@
             squareCounter = 0;
             loopTimer = 0;
             gameTimer = 0;
-            stringTime = "";
+            stringTime = "00:00";
             gameNumber = parseInt(Math.random() * 11);
             console.log(gameNumber);
 
@@ -652,6 +661,8 @@
     </script>
     <div>
         <button type="button" onclick=clearLines()>Clear Lines!</button>
+        <button onclick="{newGame()}">New Game!</button>
+    <button onclick="location.href='howto.html'">How to Play!</button>
     </div>
 </body>
 
