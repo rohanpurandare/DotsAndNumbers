@@ -58,6 +58,8 @@
         var verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
         const horizontalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0];
         const verticalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0];
+        const initialValues = [0, 1, 3, 2, 0, 1, 2, 1, 2, 2, 3, 2, 0, 0, 2, 1, 3, 1, 0, 2, 1, 3, 1, 2, 2];
+        var counter = 0;
 
         // set up the game canvas
         var canv = document.createElement("canvas");
@@ -364,7 +366,7 @@
             this.top = y;
             this.highlight = null;
             this.numSelected = 0;
-            this.value = 1;//parseInt(Math.random() * 4);
+            this.value = initialValues[counter++];//parseInt(Math.random() * 4);
             this.i = i;
             this.j = j;
             this.color = COLOR_PLAY_LIT;
