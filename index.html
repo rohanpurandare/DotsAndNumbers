@@ -35,14 +35,13 @@
         const COLOR_TIE = "black";
 
         // text
-        const TEXT_YOU = "YOU";
         const TEXT_COMP_SML = "Comp";
         const TEXT_PLAY = "Player";
         const TEXT_PLAY_SML = "Play";
         const TEXT_SIZE_CELL = CELL / 3;
         const TEXT_SIZE_TOP = MARGIN / 6;
         const TEXT_TIE = "DRAW!";
-        const TEXT_WIN = "WIN!";
+        const TEXT_WIN = "YOU WIN!";
 
 
         // definitions
@@ -53,14 +52,10 @@
             RIGHT: 3
         }
 
-        var greenCounter;
-        var winner;
-        var horizontalLines;
-        var verticalLines;
+        var greenCounter, winner, horizontalLines, verticalLines, squareCounter, loopTimer, gameTimer, stringTime;
         const horizontalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0];
         const verticalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0];
         const initialValues = [0, 1, 3, 2, 0, 1, 2, 1, 2, 2, 3, 2, 0, 0, 2, 1, 3, 1, 0, 2, 1, 3, 1, 2, 2];
-        var counter;
 
         // set up the game canvas
         var canv = document.createElement("canvas");
@@ -128,6 +123,18 @@
             //Draw lines
         }
 
+        function drawTimer(done) {
+            if (!done) {
+                loopTimer++;
+                drawText(stringTime, WIDTH * 0.5, MARGIN * 0.5, COLOR_COMP, TEXT_SIZE_TOP); //this draws 30 times per second
+                if (loopTimer % FPS == 0) { //goes inside every second
+                    gameTimer++;
+                    stringTime = Math.floor(gameTimer/60).toString().padStart(2, '0') + ":" + (gameTimer%60).toString().padStart(2, '0');
+                    console.log(time);
+                }
+            }
+        }
+
         function drawLine(x0, y0, x1, y1, color) {
             ctx.strokeStyle = color;
             ctx.beginPath();
@@ -138,6 +145,7 @@
 
         function drawScores() {
             if (winner) {
+                drawTimer(false);
                 console.log(greenCounter);
                 if (greenCounter == (GRID_SIZE * GRID_SIZE)) {
                     var output = true;
@@ -155,10 +163,11 @@
                         winner = false;
                     }
                 }
+            } else {
+                drawTimer(true);
             }
             if (timeEnd > 0) {
                 timeEnd--;
-                drawText(TEXT_YOU, WIDTH * 0.5, MARGIN * 0.5, COLOR_COMP, TEXT_SIZE_TOP);
                 drawText(TEXT_WIN, WIDTH * 0.5, MARGIN * 0.7, COLOR_COMP, TEXT_SIZE_TOP);
                 if (timeEnd == 0) {
                     newGame();
@@ -326,7 +335,10 @@
             winner = true;
             horizontalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
             verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
-            counter = 0;
+            squareCounter = 0;
+            loopTimer = 0;
+            gameTimer = 0;
+            stringTime = "";
 
             // set up the squares
             squares = [];
@@ -351,17 +363,6 @@
                 }
             }
             currentCells = [];
-
-            // check for winner
-            /*if (filledSquare) {
-                if (scorePlay + scoreComp == GRID_SIZE * GRID_SIZE) {
-                    // game over
-                    timeEnd = Math.ceil(DELAY_END * FPS);
-                }
-            } else {
-                // next player's turn
-                //playersTurn = !playersTurn;
-            }*/
         }
 
         function Line(x0, y0, x1, y1, color, show) {
@@ -385,7 +386,7 @@
             this.top = y;
             this.highlight = null;
             this.numSelected = 0;
-            this.value = initialValues[counter++];//parseInt(Math.random() * 4);
+            this.value = initialValues[squareCounter++];//parseInt(Math.random() * 4);
             this.i = i;
             this.j = j;
             this.color = COLOR_PLAY_LIT;
