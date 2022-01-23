@@ -10,6 +10,8 @@
 
 <body>
     <script>
+        var keepPlaying = true;
+
         // game parameters
         const DELAY_END = 4; // seconds until a new game starts
         const FPS = 30; // frames per second
@@ -124,9 +126,11 @@
 
         function loop() {
             drawBoard();
-            drawSquares();
-            drawGrid();
-            drawScores();
+            if (keepPlaying) {
+                drawSquares();
+                drawGrid();
+                drawScores();
+            }
             //drawNewLines();
         }
 
@@ -207,7 +211,8 @@
                 timeEnd--;
                 drawText(TEXT_WIN, WIDTH * 0.5, MARGIN * 0.7, COLOR_COMP, TEXT_SIZE_TOP);
                 if (timeEnd == 0) {
-                    newGame();
+                    //newGame();
+                    clearGame();
                 }
             }
         }
@@ -360,6 +365,13 @@
                         break OUTER;
                     }
                 }
+            }
+        }
+
+        function clearGame() {
+            keepPlaying = false;
+            if (keepPlaying) {
+                newGame(); // if user click yes to play again
             }
         }
 
