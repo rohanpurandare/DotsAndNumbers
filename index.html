@@ -53,9 +53,46 @@
         }
 
         var greenCounter, winner, horizontalLines, verticalLines, squareCounter, loopTimer, gameTimer, stringTime;
-        const horizontalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0];
-        const verticalLinesAnswer = [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0];
-        const initialValues = [0, 1, 3, 2, 0, 1, 2, 1, 2, 2, 3, 2, 0, 0, 2, 1, 3, 1, 0, 2, 1, 3, 1, 2, 2];
+        var gameNumber = parseInt(Math.random() * 12);
+        const horizontalLinesAnswer = [
+            [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1],
+            [0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0],
+            [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0],
+            [0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
+            [0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0],
+            [0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
+            [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0]
+        ];
+        const verticalLinesAnswer = [
+            [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
+            [0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0],
+            [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1],
+            [0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0],
+            [0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0],
+            [0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0],
+            [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
+            [0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0]
+        ];
+        const initialValues = [
+            [0, 1, 3, 2, 0, 1, 2, 1, 2, 2, 3, 2, 0, 0, 2, 1, 3, 1, 0, 2, 1, 3, 1, 2, 2],
+            [1, 3, 1, 1, 1, 2, 2, 2, 2, 3, 2, 1, 3, 2, 2, 2, 1, 2, 1, 1, 1, 1, 2, 3, 1],
+            [1, 0, 0, 1, 0, 3, 2, 2, 3, 1, 1, 2, 2, 2, 1, 2, 2, 1, 1, 0, 3, 1, 0, 0, 0],
+            [0, 2, 2, 1, 2, 1, 2, 0, 1, 2, 1, 1, 2, 2, 1, 1, 2, 3, 1, 1, 1, 2, 2, 2, 3],
+            [1, 2, 3, 2 ,1, 3, 1, 0, 1, 3, 2, 1, 0, 1, 2, 1, 2, 0, 2, 1, 0, 2, 3, 2, 0],
+            [3, 1, 1, 2, 2, 2, 1, 0, 0, 3, 1, 2, 1, 1, 2, 0, 1, 2, 2, 1, 0, 0, 1, 3, 1],
+            [1, 3, 1, 2, 3, 0, 3, 2, 2, 1, 2, 2, 1, 2, 0, 3, 1, 0, 2, 1, 1, 2, 2, 2, 1],
+            [0, 1, 3, 3, 3, 1, 2, 1, 1, 1, 3, 1, 0, 0, 1, 2, 1, 0, 1, 2, 1, 2, 2, 2, 1],
+            [1, 3, 2, 3, 3, 1, 3, 1, 2, 2, 2, 1, 1, 3, 1, 2, 1, 0, 2, 1, 1, 2, 2, 2, 1],
+            [1, 0, 1, 1, 1, 3, 3, 2, 1, 2, 1, 2, 1, 0, 2, 2, 2, 2, 2, 2, 3, 1, 1, 3, 1],
+            [2, 3, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 3, 2, 0, 2, 2, 2, 1, 2, 2]
+        ];
 
         // set up the game canvas
         var canv = document.createElement("canvas");
@@ -126,13 +163,13 @@
         function drawTimer(done) {
             if (!done) {
                 loopTimer++;
-                drawText(stringTime, WIDTH * 0.5, MARGIN * 0.5, COLOR_COMP, TEXT_SIZE_TOP); //this draws 30 times per second
                 if (loopTimer % FPS == 0) { //goes inside every second
                     gameTimer++;
                     stringTime = Math.floor(gameTimer/60).toString().padStart(2, '0') + ":" + (gameTimer%60).toString().padStart(2, '0');
-                    console.log(time);
+                    console.log(stringTime);
                 }
             }
+            drawText(stringTime, WIDTH * 0.5, MARGIN * 0.5, COLOR_COMP, TEXT_SIZE_TOP); //this draws 30 times per second
         }
 
         function drawLine(x0, y0, x1, y1, color) {
@@ -150,10 +187,10 @@
                 if (greenCounter == (GRID_SIZE * GRID_SIZE)) {
                     var output = true;
                     for (var i = 0; i < GRID_SIZE * GRID_SIZE + GRID_SIZE; i++) {
-                        if (horizontalLines[i] != horizontalLinesAnswer[i]) {
+                        if (horizontalLines[i] != horizontalLinesAnswer[gameNumber][i]) {
                             output = false;
                         }
-                        if (verticalLines[i] != verticalLinesAnswer[i]) {
+                        if (verticalLines[i] != verticalLinesAnswer[gameNumber][i]) {
                             output = false;
                         }
                     }
@@ -339,6 +376,7 @@
             loopTimer = 0;
             gameTimer = 0;
             stringTime = "";
+            gameNumber = parseInt(Math.random() * 12);
 
             // set up the squares
             squares = [];
@@ -386,7 +424,7 @@
             this.top = y;
             this.highlight = null;
             this.numSelected = 0;
-            this.value = initialValues[squareCounter++];//parseInt(Math.random() * 4);
+            this.value = initialValues[gameNumber][squareCounter++];//parseInt(Math.random() * 4);
             this.i = i;
             this.j = j;
             this.color = COLOR_PLAY_LIT;
