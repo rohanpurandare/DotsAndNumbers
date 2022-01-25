@@ -5,16 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+    <link rel="stylesheet" href="styles.css">
     <title>Dots and Boxes</title>
     <style></style>
 </head>
 
 <body>
-    <br>
+
     <div>
-        <button type="button" onclick=clearLines()>Clear Lines!</button>
-        <button onclick="{newGame()}">New Game!</button>
-        <button onclick="location.href='howto.html'">How to Play!</button>
+        <button class="button button1" type="button" onclick=clearLines()>Clear Lines!</button>
+        <button class="button button1" onclick="{newGame()}">New Game!</button>
+        <button class="button button1" onclick="location.href='howto.html'">How to Play!</button>
     </div>
     <br>
     <script>
@@ -25,8 +26,8 @@
         const FPS = 30; // frames per second
         const GRID_SIZE = 5; // number of rows (and columns)
         var height, width;
-        if (window.innerHeight - 80 < window.innerWidth) {
-            height = window.innerHeight - 80;
+        if (window.innerHeight - 120 < window.innerWidth) {
+            height = window.innerHeight - 120;
             width = height * .9;
         } else {
             width = window.innerWidth - 15;
@@ -107,7 +108,7 @@
                     stack[stackCounter] = neighbors[newIndex];
                     console.log(neighbors.length);
                     console.log(current, neighbors);
-                    //counter++;
+                    counter++;
                     if (counter == 15) {
                         complete = true;
                     }
