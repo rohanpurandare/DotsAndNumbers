@@ -63,33 +63,289 @@
             RIGHT: 3
         }
 
-        var greenCounter, winner, horizontalLines, verticalLines, squareCounter, loopTimer, gameTimer, stringTime;
+        var greenCounter, winner, lines, squareCounter, loopTimer, gameTimer, stringTime;
         var gameNumber = parseInt(Math.random() * 12);
-        const horizontalLinesAnswer = [
-            [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0],
-            [0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
-            [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-            [0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1],
-            [0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0],
-            [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
-            [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0],
-            [0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
-            [0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0],
-            [0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
-            [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0]
-        ];
-        const verticalLinesAnswer = [
-            [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
-            [0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0],
-            [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1],
-            [0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0],
-            [0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0],
-            [0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-            [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
-            [0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0]
+        var lineAnswer = new Array(GRID_SIZE * 2 * (GRID_SIZE + 1)).fill(0);
+        var neighbors = [];
+        var complete = false;
+        const minLength = GRID_SIZE * 4;
+        var backTrack = false;
+
+        //0 = not in loop, 1 = in loop, 2 = can not be in loop, 3 = initial neighbors
+        function generateLines() {
+            var flag = 0;
+            var stack = new Array(GRID_SIZE * 2 * (GRID_SIZE + 1)).fill(0);
+            var stackCounter = 0;
+            var startPoint = parseInt(Math.random() * GRID_SIZE * 2 * (GRID_SIZE + 1));
+            stack[stackCounter] = startPoint;
+            var current;
+            var counter = 0;
+            while (!complete) { //add condition
+                current = stack[stackCounter];
+                stackCounter++;
+                lineAnswer[current] = 1;
+                console.log("current ", current);
+                neighbors = [];
+                findNeighbors(current, minLength, stackCounter);
+                if (neighbors.length == 0) { //need to backtrack
+                    lineAnswer[current] = 4;
+                    stackCounter--;
+                    stack[stackCounter] = 0;
+                    stackCounter--;
+                    backTrack = true;
+                }
+                else {
+                    backTrack = false;
+                    var newIndex = chooseNeighbor(stackCounter);
+                    if (flag == 0) {
+                        updateNeighbors(newIndex, 3);
+                        flag = 1;
+                    }
+                    else {
+                        updateNeighbors(newIndex, 2)
+                    }
+                    stack[stackCounter] = neighbors[newIndex];
+                    console.log(neighbors.length);
+                    console.log(current, neighbors);
+                    //counter++;
+                    if (counter == 15) {
+                        complete = true;
+                    }
+                    console.log(stack);
+                }
+            }
+        }
+
+        function updateNeighbors(newIndex, key) {
+            for (var i = 0; i < neighbors.length; i++) {
+                lineAnswer[neighbors[i]] = key;
+            }
+            lineAnswer[neighbors[newIndex]] = 1;
+        }
+
+        function chooseNeighbor(stackCounter) {
+            for (var i = 0; i < neighbors.length; i++) {
+                if (lineAnswer[neighbors[i]] == 3 && stackCounter > minLength) {
+                    complete = true;
+                    return i;
+                }
+            }
+            return parseInt(Math.random() * neighbors.length)
+        }
+
+        function findNeighbors(current, stackCounter) {
+            var arrayCounter = 0;
+            console.log("horizontal:")
+            if (current < (GRID_SIZE * (GRID_SIZE + 1))) { //horizontal
+                //  | |
+                // - ~ - you are squigly
+                //  | |
+                if ((current - 1) % GRID_SIZE < GRID_SIZE - 1) { //left h
+                    console.log("    left ", current - 1);
+                    if (lineAnswer[current - 1] == 0) {
+                        neighbors[arrayCounter] = current - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current - 1] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = current - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current - 1] == 2 && backTrack) {
+                        neighbors[arrayCounter] = current - 1;
+                        arrayCounter++;
+                    }
+                }
+                if ((current + 1) % GRID_SIZE > 0) { //right h
+                    console.log("    right ", current + 1);
+                    if (lineAnswer[current + 1] == 0) {
+                        neighbors[arrayCounter] = current + 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current + 1] ==  3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = current + 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current + 1] ==  2 && backTrack) {
+                        neighbors[arrayCounter] = current + 1;
+                        arrayCounter++;
+                    }
+                }
+                console.log("formula ", ((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE)));
+                if (((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE)) < (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + GRID_SIZE) { //bottom left v
+                    console.log("    bottom left", ((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE)));
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE)] == 0) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE)] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE)] == 2 && backTrack) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE);
+                        arrayCounter++;
+                    }
+                }
+                console.log("p ", ((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1));
+                if (((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1) >= ((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)))) { //top left v
+                    console.log("    top left", ((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1));
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1] == 0) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1] == 2 && backTrack) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) - 1;
+                        arrayCounter++;
+                    }
+                }
+                if (((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE) < (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + (2 * GRID_SIZE)) { //bottom right v
+                    console.log("    bottom right", ((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE));
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE] == 0) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE] == 2 && backTrack) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE;
+                        arrayCounter++;
+                    }
+                }
+                if (((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1) >= (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + GRID_SIZE) { //top right v
+                    console.log("    top right", ((current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1));
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1] == 0) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1] == 2 && backTrack) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + (GRID_SIZE * (GRID_SIZE + 1)) + parseInt(current / GRID_SIZE) + GRID_SIZE - 1;
+                        arrayCounter++;
+                    }
+                }
+            }
+            else { //vertical
+                //  |
+                // - -
+                //  $  <-- you are dollar sign
+                // - -
+                //  |
+                console.log("vertical:");
+                if ((current - 1) % GRID_SIZE < GRID_SIZE - 1) { //top
+                    console.log("    top ", current - 1);
+                    if (lineAnswer[current - 1] == 0) {
+                        neighbors[arrayCounter] = current - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current - 1] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = current - 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current - 1] == 2 && backTrack) {
+                        neighbors[arrayCounter] = current - 1;
+                        arrayCounter++;
+                    }
+                }
+                if ((current + 1) % GRID_SIZE > 0) { //bottom v
+                    console.log("    bottom ", current + 1);
+                    if (lineAnswer[current + 1] == 0) {
+                        neighbors[arrayCounter] = current + 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current + 1] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = current + 1;
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[current + 1] == 2 && backTrack) {
+                        neighbors[arrayCounter] = current + 1;
+                        arrayCounter++;
+                    }
+                }
+                if ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) < (current % GRID_SIZE) * GRID_SIZE + GRID_SIZE) { //top right h
+                    console.log("    top right ", (current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE));
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE)] == 0) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE)] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE)] == 2 && backTrack) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE);
+                        arrayCounter++;
+                    }
+                }
+                if (((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1) >= (current % GRID_SIZE) * GRID_SIZE) { //top left h
+                    console.log("   top left ", ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1));
+                    if (lineAnswer[((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1)] == 0) {
+                        neighbors[arrayCounter] = ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1)] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1)] == 2 && backTrack) {
+                        neighbors[arrayCounter] = ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) - 1);
+                        arrayCounter++;
+                    }
+                }
+                if (((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE) < (2 + (current % GRID_SIZE)) * GRID_SIZE) { //bottom right h
+                    console.log("   bottom right ", ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE));
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE] == 0) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE; 
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE; 
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[(current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE] == 2 && backTrack) {
+                        neighbors[arrayCounter] = (current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE; 
+                        arrayCounter++;
+                    }
+                }
+                console.log(((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1), "!!!", (current % GRID_SIZE) * GRID_SIZE + GRID_SIZE)
+                if (((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1) >= (current % GRID_SIZE) * GRID_SIZE + GRID_SIZE) { //bottom left h
+                    console.log("   bottom left ", ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1));
+                    if (lineAnswer[((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1)] == 0) {
+                        neighbors[arrayCounter] = ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1)] == 3 && minLength < stackCounter) {
+                        neighbors[arrayCounter] = ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1);
+                        arrayCounter++;
+                    }
+                    if (lineAnswer[((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1)] == 2 && backTrack) {
+                        neighbors[arrayCounter] = ((current % GRID_SIZE) * GRID_SIZE + parseInt((current - (GRID_SIZE * (GRID_SIZE + 1))) / GRID_SIZE) + GRID_SIZE - 1);
+                        arrayCounter++;
+                    }
+                }
+            }
+        }
+
+        const linesAnswer = [
+            [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1],
+            [0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
+            [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0],
+            [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+            [0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0],
+            [0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
+            [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0]
         ];
         const initialValues = [
             [0, 1, 3, 2, 0, 1, 2, 1, 2, 2, 3, 2, 0, 0, 2, 1, 3, 1, 0, 2, 1, 3, 1, 2, 2],
@@ -189,7 +445,7 @@
                 if (loopTimer % FPS == 0) { //goes inside every second
                     gameTimer++;
                     stringTime = Math.floor(gameTimer/60).toString().padStart(2, '0') + ":" + (gameTimer%60).toString().padStart(2, '0');
-                    console.log(stringTime);
+                    //console.log(stringTime);
                 }
             }
             drawText(stringTime, WIDTH * 0.5, MARGIN * 0.5, COLOR_PLAY, TEXT_SIZE_TOP); //this draws 30 times per second
@@ -206,14 +462,14 @@
         function drawScores() {
             if (winner) {
                 drawTimer(false);
-                console.log(greenCounter);
+                //console.log(greenCounter);
                 if (greenCounter == (GRID_SIZE * GRID_SIZE)) {
                     var output = true;
                     for (var i = 0; i < GRID_SIZE * GRID_SIZE + GRID_SIZE; i++) {
-                        if (horizontalLines[i] != horizontalLinesAnswer[gameNumber][i]) {
+                        if (lines[i] != linesAnswer[gameNumber][i]) {
                             output = false;
                         }
-                        if (verticalLines[i] != verticalLinesAnswer[gameNumber][i]) {
+                        if (lines[i + 30] != linesAnswer[gameNumber][i + 30]) {
                             output = false;
                         }
                     }
@@ -339,14 +595,14 @@
             timeEnd = 0;
             greenCounter = 0;
             winner = true;
-            horizontalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
-            verticalLines = new Array(GRID_SIZE * (GRID_SIZE + 1)).fill(0);
+            lines = new Array(GRID_SIZE * (GRID_SIZE + 1) * 2).fill(0);
             squareCounter = 0;
             loopTimer = 0;
             gameTimer = 0;
             stringTime = "00:00";
             gameNumber = parseInt(Math.random() * 11);
-            console.log(gameNumber);
+            generateLines();
+            //console.log(gameNumber);
 
 
             // set up the squares
@@ -529,11 +785,11 @@
                         this.sideBot.selected = true;
                         if (this.sideBot.color == COLOR_BOARD) {
                             this.numSelected++;
-                            horizontalLines[this.j + GRID_SIZE + (GRID_SIZE * this.i)] = 1;
+                            lines[this.j + GRID_SIZE + (GRID_SIZE * this.i)] = 1;
                             this.sideBot.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
-                            horizontalLines[this.j + GRID_SIZE + (GRID_SIZE * this.i)] = 0;
+                            lines[this.j + GRID_SIZE + (GRID_SIZE * this.i)] = 0;
                             this.sideBot.color = COLOR_BOARD;
                         }
                         break;
@@ -541,11 +797,11 @@
                         this.sideLeft.selected = true;
                         if (this.sideLeft.color == COLOR_BOARD) {
                             this.numSelected++;
-                            verticalLines[this.i + (GRID_SIZE * this.j)] = 1;
+                            lines[this.i + (GRID_SIZE * this.j) + 30] = 1;
                             this.sideLeft.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
-                            verticalLines[this.i + (GRID_SIZE * this.j)] = 0;
+                            lines[this.i + (GRID_SIZE * this.j) + 30] = 0;
                             this.sideLeft.color = COLOR_BOARD;
                         }
                         break;
@@ -553,11 +809,11 @@
                         this.sideRight.selected = true;
                         if (this.sideRight.color == COLOR_BOARD) {
                             this.numSelected++;
-                            verticalLines[this.i + GRID_SIZE + (GRID_SIZE * this.j)] = 1;
+                            lines[this.i + GRID_SIZE + (GRID_SIZE * this.j) + 30] = 1;
                             this.sideRight.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
-                            verticalLines[this.i + GRID_SIZE + (GRID_SIZE * this.j)] = 0;
+                            lines[this.i + GRID_SIZE + (GRID_SIZE * this.j) + 30] = 0;
                             this.sideRight.color = COLOR_BOARD;
                         }
                         break;
@@ -565,11 +821,11 @@
                         this.sideTop.selected = true;
                         if (this.sideTop.color == COLOR_BOARD) {
                             this.numSelected++;
-                            horizontalLines[this.j + (GRID_SIZE * this.i)] = 1;
+                            lines[this.j + (GRID_SIZE * this.i)] = 1;
                             this.sideTop.color = COLOR_PLAY;
                         } else {
                             this.numSelected--;
-                            horizontalLines[this.j + (GRID_SIZE * this.i)] = 0;
+                            lines[this.j + (GRID_SIZE * this.i)] = 0;
                             this.sideTop.color = COLOR_BOARD;
                         }
                         break;
