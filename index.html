@@ -15,9 +15,12 @@
 
 <body>
     <div>
-        <button class="button button1" type="button" onclick=clearLines()>Clear Lines!</button>
-        <button class="button button1" onclick="{newGame()}">New Game!</button>
-        <button class="button button1" onclick="location.href='howto.html'">How to Play!</button>
+            <button class="button button1" type="button" onclick=clearLines()>Clear Lines!</button>
+            <button class="button button1" onclick="{newGame()}">New Game!</button>
+            <button class="button button1" onclick="location.href='howto.html'">How to Play!</button>
+            <div id="div">
+                <img src="/images/music-message.png" width = 400>
+            </div>
     </div>
     <br>
     <script>
@@ -68,6 +71,12 @@
 
         var greenCounter, winner, lines, squareCounter, loopTimer, gameTimer, stringTime;
         var gameNumber = parseInt(Math.random() * 12);
+        window.setTimeout("closeDiv();", 5000);
+
+        function closeDiv(){
+            document.getElementById("div").style.display=" none";
+        }
+        
         var lineAnswer = new Array(GRID_SIZE * 2 * (GRID_SIZE + 1)).fill(0);
         var neighbors = [];
         var complete = false;
@@ -847,6 +856,24 @@
             }
         }
     </script>
+    </div>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWV7EzJMK2FUI?utm_source=generator&theme=0" width="45%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 </body>
 
 </html>

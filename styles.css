@@ -11,6 +11,29 @@ h3 {
     font-family: 'Quicksand', sans-serif;
 }
 
+p {
+    font-family: 'Quicksand', sans-serif;
+    color: #696969;
+}
+
+#div {
+    padding: 10px;
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .button {
     background-color: white; /* Green */
     border: none;
